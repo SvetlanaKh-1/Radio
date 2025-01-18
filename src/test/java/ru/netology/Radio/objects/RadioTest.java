@@ -6,102 +6,102 @@ import org.junit.jupiter.api.Test;
 public class RadioTest {
 
     @Test
-    public void shouldSetStation() {
+    public void testRadioDefault() {
         Radio rad = new Radio();
 
-        rad.setCurrentStation(8);
-        int expected = 8;
-        int actual = rad.getCurrentStation();
+        Assertions.assertEquals(0, rad.getMinStation());
+        Assertions.assertEquals(9, rad.getMaxStation());
+        Assertions.assertEquals(0, rad.getCurrentStation());
+    }
 
-        Assertions.assertEquals(expected, actual);
+    @Test
+    public void testRadioParam() {
+        Radio rad = new Radio(30);
+
+        Assertions.assertEquals(0, rad.getMinStation());
+        Assertions.assertEquals(29, rad.getMaxStation());
+        Assertions.assertEquals(0, rad.getCurrentStation());
+    }
+
+    @Test
+    public void shouldSetStation() {
+        Radio rad = new Radio(30);
+
+        rad.setCurrentStation(28);
+
+        Assertions.assertEquals(28, rad.getCurrentStation());
     }
 
     @Test
     public void shouldSetMaxStation() {
-        Radio rad = new Radio();
+        Radio rad = new Radio(30);
 
-        rad.setCurrentStation(9);
-        int expected = 9;
-        int actual = rad.getCurrentStation();
+        rad.setCurrentStation(29);
 
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(29, rad.getMaxStation());
     }
 
     @Test
     public void shouldSetMinStation() {
-        Radio rad = new Radio();
+        Radio rad = new Radio(30);
 
         rad.setCurrentStation(0);
-        int expected = 0;
-        int actual = rad.getCurrentStation();
 
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(0, rad.getMinStation());
     }
 
     @Test
     public void shouldSetStationAboveMax() {
-        Radio rad = new Radio();
+        Radio rad = new Radio(30);
 
-        rad.setCurrentStation(10);
-        int expected = 0;
-        int actual = rad.getCurrentStation();
+        rad.setCurrentStation(30);
 
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(0, rad.getCurrentStation());
     }
 
     @Test
     public void shouldSetStationBelowMin() {
-        Radio rad = new Radio();
+        Radio rad = new Radio(30);
 
         rad.setCurrentStation(-1);
-        int expected = 0;
-        int actual = rad.getCurrentStation();
 
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(0, rad.getCurrentStation());
     }
 
     @Test
     public void shouldSetNextStation() {
-        Radio rad = new Radio();
+        Radio rad = new Radio(30);
         rad.setCurrentStation(6);
-
         rad.setNextStation();
-        int expected = 7;
-        int actual = rad.getCurrentStation();
-        Assertions.assertEquals(expected, actual);
+
+        Assertions.assertEquals(7, rad.getCurrentStation());
     }
 
     @Test
     public void shouldSetNextStationAboveMax() {
-        Radio rad = new Radio();
-        rad.setCurrentStation(9);
-
+        Radio rad = new Radio(30);
+        rad.setCurrentStation(29);
         rad.setNextStation();
-        int expected = 0;
-        int actual = rad.getCurrentStation();
-        Assertions.assertEquals(expected, actual);
+
+        Assertions.assertEquals(0, rad.getCurrentStation());
     }
 
     @Test
     public void shouldSetPrevStation() {
-        Radio rad = new Radio();
+        Radio rad = new Radio(30);
         rad.setCurrentStation(9);
-
         rad.setPrevStation();
-        int expected = 8;
-        int actual = rad.getCurrentStation();
-        Assertions.assertEquals(expected, actual);
+
+        Assertions.assertEquals(8, rad.getCurrentStation());
     }
 
     @Test
     public void shouldSetPrevStationBelowMin() {
-        Radio rad = new Radio();
+        Radio rad = new Radio(30);
         rad.setCurrentStation(0);
-
         rad.setPrevStation();
-        int expected = 9;
-        int actual = rad.getCurrentStation();
-        Assertions.assertEquals(expected, actual);
+
+        Assertions.assertEquals(29, rad.getCurrentStation());
     }
 
     @Test
